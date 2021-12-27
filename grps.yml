@@ -1,0 +1,13 @@
+##############################################################################################
+#
+#	Description:	IC-Q4: Testing RESTAPI Calls with Talend (Basics)
+#	Date: 			  14.12.2021
+#	Prepared by:	Khurram Nazir
+#
+##############################################################################################
+---
+- name: "Displying message from Groups"  
+  ansible.builtin.debug:
+    msg: "Hello world! from Groups"
+
+       

@@ -1,0 +1,35 @@
+##############################################################################################
+#
+#	Description:	IC-Q4: Testing RESTAPI Calls with Talend (Basics)
+#	Date: 			  14.12.2021
+#	Prepared by:	Khurram Nazir
+#
+##############################################################################################
+---
+
+- name:  "Automate TMC Tasks"
+  hosts:  localhost
+  vars:
+    tmc_ver:   "1.4"
+    api_token: "Bearer bPyxl-hASlGB5uvmDTywZduAUmQ08XGptuNvUYU8Kwa5HYyy6Fwu5o3X-d4EHmOS"
+    endpoint: "https://api.eu.cloud.talend.com/v1/management/"
+
+  tasks:
+   - pause:
+       prompt: "---------------------------------Main Menue---------------------------------\n1). For TMC-Users [Press: 1]\n2). For TMC-Groups [Press: 2]"
+     register: main_input
+   - set_fact:
+       main_var: "{{ main_input.user_input }}"       
+   - pause:
+       prompt: "---------------------------------TMC-Users Menue---------------------------------\n1). For TMC-Users Creation file executing" 
+
+   - import_tasks:  users.yml
+       
+     when: main_var =="1"
+
+   - pause:
+       prompt: "---------------------------------TMC-Groups Menue---------------------------------\n1). For TMC-Group Creation file executing"
+   - import_tasks:  grps.yml
+     
+     when: main_var =="2"
+     

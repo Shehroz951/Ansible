@@ -1,0 +1,17 @@
+- name:  "Automate TMC Tasks"
+  hosts:  localhost
+  vars:
+    tmc_ver:   "1.4"
+    api_token: "Bearer bPyxl-hASlGB5uvmDTywZduAUmQ08XGptuNvUYU8Kwa5HYyy6Fwu5o3X-d4EHmOS"
+    endpoint: "https://api.eu.cloud.talend.com/v1/management/"
+    
+  vars_prompt:
+   - name: "menu"
+     prompt: "---> What you want to do? <---\n1- For Users insert 1\n2- For Groups insert 2\n"
+     private: no
+  tasks:
+    - include_tasks:  users.yml
+      when: menu == "1"
+            
+    - include_tasks:  grps.yml    
+      when: menu == "2"

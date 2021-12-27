@@ -1,0 +1,25 @@
+##############################################################################################
+#
+#	Description:	IC-Q4: Testing RESTAPI Calls with Talend (Basics)
+#	Date: 			  14.12.2021
+#	Prepared by:	Khurram Nazir
+#
+##############################################################################################
+---
+
+- hosts: localhost
+  tasks:
+  - name: Distribution
+    ansible.builtin.debug:
+     msg: "This is Not Red Hat System."
+    #debug: msg="{{ ansible_distribution }}"
+    when: ansible_os_family == "!RedHat"
+    
+  - name: Distribution
+    ansible.builtin.debug:
+     msg: "This is Red Hat System."
+    #debug: msg="{{ ansible_distribution }}"
+    when: ansible_os_family == "RedHat"
+...
+
+        

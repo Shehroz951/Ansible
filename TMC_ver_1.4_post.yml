@@ -1,0 +1,71 @@
+- name:  "Automate TMC Tasks"
+  hosts:  localhost
+  vars:
+    tmc_ver:   "1.4"
+    api_token: "Bearer bPyxl-hASlGB5uvmDTywZduAUmQ08XGptuNvUYU8Kwa5HYyy6Fwu5o3X-d4EHmOS"
+    endpoint: "https://api.eu.cloud.talend.com/v1/management/"
+    
+  vars_prompt:
+   - name: "UserName"
+     prompt: "Please Enter Talend user name"
+     default: "UserName"
+     private: no
+    
+   - name: "FirstName"
+     prompt: "Please Enter User First Name"     
+     default: "FirstName"
+     private: no
+     
+   - name: "LastName"
+     prompt: "Please Enter User Last Name"
+     default: "LastName"
+     private: no 
+     
+   - name: "Email"
+     prompt: "Please Enter User Email address"
+     default: "Email@gaad.com"
+     private: no 
+     
+   - name: "RoleId"
+     prompt: "Please Enter Valid RoleId"
+     default: "fec0696c-72ea-4534-a112-82d96566e31d"
+     private: n
+     
+   - name: "GroupName"
+     prompt: "Please Enter Group Name"
+     default: "Dev"
+     private: no
+     
+
+  tasks:
+   - name: "Creating Talend users"    
+     ansible.builtin.uri:
+      url: "{{endpoint}}users"  
+      method: POST 
+      headers:
+       Authorization: "{{api_token}}"
+       Accept: application/json         
+      body_format: json
+      body:      
+       login: "{{UserName}}"
+       firstName: "{{FirstName}}"
+       lastName: "{{LastName}}"
+       email: "{{Email}}"    
+       #active: false
+       roleIds: [ "{{RoleId}}" ]
+     register: results
+     ignore_errors: yes     
+   - name: "Creating Talend Group" 
+
+           
+     ansible.builtin.uri:
+      url: "{{endpoint}}groups"  
+      method: POST 
+      headers:
+       Authorization: "{{api_token}}"
+       Accept: application/json         
+      body_format: json
+      body:      
+       name: "{{GroupName}}"
+     register: results1
+       
