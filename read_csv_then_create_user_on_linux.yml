@@ -1,0 +1,34 @@
+##############################################################################################
+#
+#	Description:	Reading a csv file then create linux users
+#	Date: 			  17.01.2022
+#	Prepared by:	Shehroz Khan
+#
+##############################################################################################
+
+---
+- name: Read csv file and creating linux users
+  gather_facts: True
+  hosts: localhost
+  
+
+  tasks:
+  
+    - read_csv:
+        path: users.csv
+      register: all_user
+  
+    - debug: 
+        msg: "first name is {{ user.First_Name }} and last name is {{ user.Last_Name }}"
+      loop: "{{ all_user.list }}"
+      loop_control:
+        loop_var: user
+        
+    - name: create linux user from csv
+      user:
+        name: "{{ item.User_Name }}"
+        state: present
+      loop: "{{ all_user.list }}"
+      
+  
+
